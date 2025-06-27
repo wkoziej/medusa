@@ -75,7 +75,7 @@ class TestFixtures:
     def test_platform_config_fixture(self, platform_config):
         """Test platform configuration fixture."""
         assert isinstance(platform_config, PlatformConfig)
-        assert platform_config.platform == "youtube"
+        assert platform_config.platform_name == "youtube"
         assert platform_config.enabled is True
         assert "client_secrets_file" in platform_config.credentials
     
