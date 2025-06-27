@@ -11,10 +11,14 @@ class ConfigError(MedusaError):
     pass
 
 
+# Alias for backward compatibility and clearer naming
+ConfigurationError = ConfigError
+
+
 class UploadError(MedusaError):
     """Raised when media upload fails."""
     
-    def __init__(self, message: str, platform: str, original_error: Exception = None):
+    def __init__(self, message: str, platform: str, original_error: Exception | None = None):
         super().__init__(message)
         self.platform = platform
         self.original_error = original_error
@@ -23,7 +27,7 @@ class UploadError(MedusaError):
 class PublishError(MedusaError):
     """Raised when social media publishing fails."""
     
-    def __init__(self, message: str, platform: str, original_error: Exception = None):
+    def __init__(self, message: str, platform: str, original_error: Exception | None = None):
         super().__init__(message)
         self.platform = platform
         self.original_error = original_error
