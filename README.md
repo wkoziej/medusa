@@ -1,5 +1,9 @@
 # Medusa - Media Upload & Social Automation
 
+<div align="center">
+  <img src="images/medusa.png" alt="Medusa Logo" width="300">
+</div>
+
 A Python library for automating media uploads to hosting platforms (YouTube, Vimeo) and subsequent social media publishing (Facebook, Twitter). Designed for personal publishing workflows with asynchronous task processing and status tracking.
 
 ## Features
