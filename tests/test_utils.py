@@ -240,8 +240,10 @@ class TestDataGenerator:
         if not filename:
             filename = f"video_{TestDataGenerator.random_string(6)}.mp4"
         
+        title = filename.replace('.mp4', '').replace('_', ' ').title()
         return MediaMetadata(
-            title=filename,
+            title=title,
+            description=f"Test video: {title}",
             file_size=random.randint(1024000, 1000000000),  # 1MB to 1GB
             duration=random.randint(30, 7200),  # 30 seconds to 2 hours
             privacy=random.choice(["public", "unlisted", "private"]),
@@ -294,7 +296,7 @@ class TestDataGenerator:
             platform_config = TestDataGenerator.random_platform_config(platform)
             config_data[platform] = {
                 **platform_config.credentials,
-                **platform_config.settings
+                **platform_config.metadata
             }
         
         config_file = temp_dir / "test_config.json"
@@ -345,7 +347,8 @@ class TaskAssertions:
         TaskAssertions.assert_task_status(task, TaskStatus.IN_PROGRESS)
         
         if expected_platform:
-            assert task.current_platform == expected_platform, f"Expected current platform {expected_platform}, got {task.current_platform}"
+            current_platform = task.results.get("current_platform")
+            assert current_platform == expected_platform, f"Expected current platform {expected_platform}, got {current_platform}"
 
 
 class ExceptionAssertions:

@@ -176,7 +176,8 @@ def failed_task_result():
 def sample_media_metadata():
     """Provide sample MediaMetadata for testing."""
     return MediaMetadata(
-        title="test_video.mp4",
+        title="Test Video",
+        description="A test video file",
         file_size=1024000,
         duration=120,
         privacy="unlisted",
@@ -190,7 +191,6 @@ def sample_exceptions():
     return {
         "config_error": ConfigError(
             "Configuration file not found",
-            error_code="CONFIG_ERROR",
             config_file="missing_config.json"
         ),
         "upload_error": UploadError(
@@ -270,7 +270,8 @@ class MediaMetadataFactory:
     def create_video(filename: str = "test.mp4", size: int = 1024000) -> MediaMetadata:
         """Create video metadata."""
         return MediaMetadata(
-            title=filename,
+            title=filename.replace('.mp4', '').replace('_', ' ').title(),
+            description=f"Test video: {filename}",
             file_size=size,
             duration=120,
             privacy="unlisted",
@@ -281,7 +282,8 @@ class MediaMetadataFactory:
     def create_large_video() -> MediaMetadata:
         """Create large video metadata."""
         return MediaMetadata(
-            title="large_video.mp4",
+            title="Large Video",
+            description="A large test video file",
             file_size=100 * 1024 * 1024,  # 100MB
             duration=1800,  # 30 minutes
             privacy="public",

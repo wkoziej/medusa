@@ -320,6 +320,35 @@ class NetworkError(MedusaError):
         self.endpoint = endpoint
 
 
+class TemplateError(MedusaError):
+    """Raised when template processing fails."""
+    
+    def __init__(
+        self,
+        message: str,
+        template: Optional[str] = None,
+        variable_name: Optional[str] = None,
+        platform: Optional[str] = None,
+        original_error: Optional[Exception] = None
+    ):
+        context = {}
+        if template:
+            context['template'] = template[:100] + "..." if len(template) > 100 else template
+        if variable_name:
+            context['variable_name'] = variable_name
+            
+        super().__init__(
+            message=message,
+            error_code="TEMPLATE_ERROR",
+            platform=platform,
+            context=context,
+            original_error=original_error
+        )
+        
+        self.template = template
+        self.variable_name = variable_name
+
+
 # Exception translation utilities
 def translate_api_error(
     original_error: Exception,
