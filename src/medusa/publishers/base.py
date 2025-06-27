@@ -466,3 +466,17 @@ class BasePublisher(ABC):
         """Async context manager exit."""
         await self.cleanup()
         return False  # Don't suppress exceptions
+    
+    def health_check(self) -> bool:
+        """
+        Check if the platform is healthy and ready for operations.
+        
+        Returns:
+            True if platform is healthy, False otherwise
+        """
+        try:
+            # Basic health check - verify authentication status
+            return self.is_authenticated
+        except Exception as e:
+            self.logger.error(f"Health check failed: {e}")
+            return False
