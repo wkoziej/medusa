@@ -178,6 +178,16 @@ class MediaMetadata:
     category: Optional[str] = None
     language: Optional[str] = None
     
+    # Extended YouTube-specific fields
+    default_language: Optional[str] = None
+    default_audio_language: Optional[str] = None
+    scheduled_publish_time: Optional[datetime] = None
+    made_for_kids: Optional[bool] = None
+    embeddable: Optional[bool] = None
+    public_stats_viewable: Optional[bool] = None
+    license_type: Optional[str] = None
+    thumbnail_path: Optional[str] = None  # Local path to thumbnail file
+    
     # Valid privacy settings
     VALID_PRIVACY_SETTINGS = {"public", "unlisted", "private"}
     
@@ -239,7 +249,15 @@ class MediaMetadata:
             "duration": self.duration,
             "file_size": self.file_size,
             "category": self.category,
-            "language": self.language
+            "language": self.language,
+            "default_language": self.default_language,
+            "default_audio_language": self.default_audio_language,
+            "scheduled_publish_time": self.scheduled_publish_time.isoformat() if self.scheduled_publish_time else None,
+            "made_for_kids": self.made_for_kids,
+            "embeddable": self.embeddable,
+            "public_stats_viewable": self.public_stats_viewable,
+            "license_type": self.license_type,
+            "thumbnail_path": self.thumbnail_path
         }
     
     @classmethod
@@ -253,6 +271,11 @@ class MediaMetadata:
         Returns:
             MediaMetadata instance
         """
+        # Parse scheduled_publish_time if present
+        scheduled_publish_time = None
+        if data.get("scheduled_publish_time"):
+            scheduled_publish_time = datetime.fromisoformat(data["scheduled_publish_time"].replace('Z', '+00:00'))
+        
         return cls(
             title=data.get("title"),
             description=data.get("description"),
@@ -262,7 +285,15 @@ class MediaMetadata:
             duration=data.get("duration"),
             file_size=data.get("file_size"),
             category=data.get("category"),
-            language=data.get("language")
+            language=data.get("language"),
+            default_language=data.get("default_language"),
+            default_audio_language=data.get("default_audio_language"),
+            scheduled_publish_time=scheduled_publish_time,
+            made_for_kids=data.get("made_for_kids"),
+            embeddable=data.get("embeddable"),
+            public_stats_viewable=data.get("public_stats_viewable"),
+            license_type=data.get("license_type"),
+            thumbnail_path=data.get("thumbnail_path")
         )
 
 
