@@ -416,30 +416,6 @@ Update these files:
 Ensure all YouTube metadata features are properly supported and validated.
 ```
 
-#### Step 4.4: YouTube Error Handling and Status Updates
-**Prompt:**
-```
-Implement comprehensive YouTube error handling and status reporting using TDD:
-
-1. Add YouTube-specific error translation
-2. Implement detailed status reporting during uploads
-3. Handle rate limiting and quota errors
-4. Add retry logic for transient failures
-5. Include proper cleanup on failures
-
-Requirements:
-- Translate YouTube API errors to Medusa exceptions
-- Provide detailed progress and status updates
-- Handle quota exceeded and rate limiting
-- Implement exponential backoff for retries
-- Create tests for all error scenarios
-
-Update these files:
-- src/medusa/uploaders/youtube.py (enhance existing)
-- tests/test_uploaders/test_youtube.py (enhance existing)
-
-Ensure robust error handling and informative status reporting.
-```
 
 ---
 
