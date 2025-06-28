@@ -120,18 +120,6 @@
   - [x] Post validation
   - [x] Test coverage: 90% (34 tests)
 
-- [ ] **Step 5.3**: Link Substitution Mechanism
-  - [ ] Template variable substitution
-  - [ ] Multiple variable types support
-  - [ ] Fallback handling
-  - [ ] Test coverage: 0%
-
-- [ ] **Step 5.4**: Cross-Platform Result Passing
-  - [ ] Result passing system
-  - [ ] Dependency resolution
-  - [ ] Result validation
-  - [ ] Test coverage: 0%
-
 ### Chunk 6: Core Orchestration
 - [ ] **Step 6.1**: MedusaCore Basic Structure
   - [ ] MedusaCore class implementation
@@ -182,16 +170,30 @@
   - [ ] Troubleshooting guide
   - [ ] Test coverage: 0%
 
+- [ ] **Step 7.5**: Link Substitution Mechanism (Optional)
+  - [ ] Template variable substitution
+  - [ ] Multiple variable types support
+  - [ ] Fallback handling
+  - [ ] Test coverage: 0%
+
+- [ ] **Step 7.6**: Cross-Platform Result Passing (Optional)
+  - [ ] Result passing system
+  - [ ] Dependency resolution
+  - [ ] Result validation
+  - [ ] Test coverage: 0%
+
 ## Overall Progress
-- **Total Steps**: 28
+- **Total Steps**: 28 (26 core + 2 optional)
 - **Completed**: 17 (Step 5.2 Facebook Post Creation implemented)
 - **In Progress**: 0  
-- **Remaining**: 11
-- **Overall Progress**: 60.7%
-- **Chunk 5 Progress**: 50% (2/4 steps complete)
+- **Remaining**: 9 core + 2 optional
+- **Overall Progress**: 65.4% (17/26 core steps)
+- **Chunk 5 Progress**: 100% (2/2 steps complete)
 
 ## Next Action
-Continue with Step 5.3: Link Substitution Mechanism using the prompt provided in plan.md.
+Continue with Step 6.1: MedusaCore Basic Structure using the prompt provided in plan.md.
+
+But first, let's test scheduled Facebook posts functionality.
 
 ## Notes
 - Each step should achieve 100% test coverage before moving to the next

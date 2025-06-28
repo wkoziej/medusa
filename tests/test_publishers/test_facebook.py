@@ -157,13 +157,89 @@ class TestFacebookPublisher:
     
     def test_validate_content_invalid_link(self, publisher: FacebookPublisher):
         """Test content validation with invalid link."""
-        content = "Check out this video: invalid_link"
-        metadata = {"type": "link", "link": "invalid_link"}
+        content = "Check out this link"
+        metadata = {
+            "type": "link",
+            "link": "not-a-valid-url"
+        }
         
         with pytest.raises(ValidationError) as exc_info:
             publisher._validate_content(content, metadata)
         
         assert "Invalid URL format" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_invalid_timestamp_type(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with invalid timestamp type."""
+        content = "Scheduled post"
+        metadata = {
+            "scheduled_publish_time": "not-a-number"
+        }
+        
+        with pytest.raises(ValidationError) as exc_info:
+            publisher._validate_content(content, metadata)
+        
+        assert "must be a positive integer timestamp" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_negative_timestamp(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with negative timestamp."""
+        content = "Scheduled post"
+        metadata = {
+            "scheduled_publish_time": -1
+        }
+        
+        with pytest.raises(ValidationError) as exc_info:
+            publisher._validate_content(content, metadata)
+        
+        assert "must be a positive integer timestamp" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_zero_timestamp(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with zero timestamp."""
+        content = "Scheduled post"
+        metadata = {
+            "scheduled_publish_time": 0
+        }
+        
+        with pytest.raises(ValidationError) as exc_info:
+            publisher._validate_content(content, metadata)
+        
+        assert "must be a positive integer timestamp" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_past_timestamp(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with past timestamp."""
+        content = "Scheduled post"
+        past_time = int(datetime.now(timezone.utc).timestamp()) - 3600  # 1 hour ago
+        metadata = {
+            "scheduled_publish_time": past_time
+        }
+        
+        with pytest.raises(ValidationError) as exc_info:
+            publisher._validate_content(content, metadata)
+        
+        assert "must be in the future" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_current_timestamp(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with current timestamp."""
+        content = "Scheduled post"
+        current_time = int(datetime.now(timezone.utc).timestamp())
+        metadata = {
+            "scheduled_publish_time": current_time
+        }
+        
+        with pytest.raises(ValidationError) as exc_info:
+            publisher._validate_content(content, metadata)
+        
+        assert "must be in the future" in str(exc_info.value)
+    
+    def test_validate_content_scheduled_post_valid_future_timestamp(self, publisher: FacebookPublisher):
+        """Test validation of scheduled post with valid future timestamp."""
+        content = "Scheduled post"
+        future_time = int(datetime.now(timezone.utc).timestamp()) + 3600  # 1 hour from now
+        metadata = {
+            "scheduled_publish_time": future_time
+        }
+        
+        # Should not raise any exception
+        publisher._validate_content(content, metadata)
     
     @pytest.mark.asyncio
     async def test_publish_post_text_success(self, publisher: FacebookPublisher, mock_auth):

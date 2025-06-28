@@ -416,7 +416,6 @@ Update these files:
 Ensure all YouTube metadata features are properly supported and validated.
 ```
 
-
 ---
 
 ### Chunk 5: Facebook Integration
@@ -469,58 +468,6 @@ Create these files:
 - tests/test_publishers/test_facebook.py
 
 Ensure posts are created correctly with proper validation.
-```
-
-#### Step 5.3: Link Substitution Mechanism
-**Prompt:**
-```
-Implement dynamic link substitution for Facebook posts using TDD:
-
-1. Add template variable substitution system
-2. Support multiple variable types (youtube_url, vimeo_url, etc.)
-3. Include validation for required variables
-4. Add fallback handling for missing variables
-5. Support conditional content based on available variables
-
-Requirements:
-- Use template string substitution safely
-- Support nested variable references
-- Validate required variables before publishing
-- Handle missing variables gracefully
-- Create tests for all substitution scenarios
-
-Update these files:
-- src/medusa/publishers/facebook.py (enhance existing)
-- tests/test_publishers/test_facebook.py (enhance existing)
-
-Ensure template substitution is safe and reliable.
-```
-
-#### Step 5.4: Cross-Platform Result Passing
-**Prompt:**
-```
-Implement cross-platform result passing and dependency management using TDD:
-
-1. Create result passing system between platforms
-2. Add dependency resolution for platform ordering
-3. Include result validation and transformation
-4. Support conditional publishing based on results
-5. Add proper error handling for dependency failures
-
-Requirements:
-- Pass results between upload and publishing platforms
-- Resolve platform dependencies automatically
-- Validate results before use in subsequent platforms
-- Support conditional logic based on results
-- Create tests for all dependency scenarios
-
-Update these files:
-- src/medusa/publishers/facebook.py (enhance existing)
-- src/medusa/utils/dependencies.py (create new)
-- tests/test_publishers/test_facebook.py (enhance existing)
-- tests/test_dependencies.py (create new)
-
-Ensure cross-platform communication is reliable and well-tested.
 ```
 
 ---
@@ -735,6 +682,58 @@ Create these files:
 - docs/performance.md
 
 Ensure the library is production-ready with comprehensive documentation.
+```
+
+#### Step 7.5: Link Substitution Mechanism (Optional Enhancement)
+**Prompt:**
+```
+Implement dynamic link substitution for Facebook posts using TDD:
+
+1. Add template variable substitution system
+2. Support multiple variable types (youtube_url, vimeo_url, etc.)
+3. Include validation for required variables
+4. Add fallback handling for missing variables
+5. Support conditional content based on available variables
+
+Requirements:
+- Use template string substitution safely
+- Support nested variable references
+- Validate required variables before publishing
+- Handle missing variables gracefully
+- Create tests for all substitution scenarios
+
+Update these files:
+- src/medusa/publishers/facebook.py (enhance existing)
+- tests/test_publishers/test_facebook.py (enhance existing)
+
+Ensure template substitution is safe and reliable.
+```
+
+#### Step 7.6: Cross-Platform Result Passing (Optional Enhancement)
+**Prompt:**
+```
+Implement cross-platform result passing and dependency management using TDD:
+
+1. Create result passing system between platforms
+2. Add dependency resolution for platform ordering
+3. Include result validation and transformation
+4. Support conditional publishing based on results
+5. Add proper error handling for dependency failures
+
+Requirements:
+- Pass results between upload and publishing platforms
+- Resolve platform dependencies automatically
+- Validate results before use in subsequent platforms
+- Support conditional logic based on results
+- Create tests for all dependency scenarios
+
+Update these files:
+- src/medusa/publishers/facebook.py (enhance existing)
+- src/medusa/utils/dependencies.py (create new)
+- tests/test_publishers/test_facebook.py (enhance existing)
+- tests/test_dependencies.py (create new)
+
+Ensure cross-platform communication is reliable and well-tested.
 ```
 
 ---
