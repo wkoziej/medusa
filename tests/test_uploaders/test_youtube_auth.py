@@ -12,14 +12,14 @@ from unittest.mock import Mock, patch, AsyncMock, MagicMock
 from datetime import datetime, timedelta
 from pathlib import Path
 
-from src.medusa.uploaders.youtube_auth import YouTubeAuth
-from src.medusa.exceptions import (
+from medusa.uploaders.youtube_auth import YouTubeAuth
+from medusa.exceptions import (
     AuthenticationError,
     ConfigError,
     ValidationError,
     MedusaError
 )
-from src.medusa.models import PlatformConfig
+from medusa.models import PlatformConfig
 
 
 class TestYouTubeAuthInitialization:
@@ -246,7 +246,7 @@ class TestYouTubeAuthCredentialsLoading:
 class TestYouTubeAuthTokenValidation:
     """Test token validation and expiry checking."""
     
-    @patch('src.medusa.uploaders.youtube_auth.build')
+    @patch('medusa.uploaders.youtube_auth.build')
     def test_validate_credentials_valid_token(self, mock_build):
         """Test credentials validation with valid token."""
         # Mock the YouTube API service
@@ -271,7 +271,7 @@ class TestYouTubeAuthTokenValidation:
         assert result is True
         mock_build.assert_called_once_with('youtube', 'v3', credentials=mock_credentials)
     
-    @patch('src.medusa.uploaders.youtube_auth.build')
+    @patch('medusa.uploaders.youtube_auth.build')
     def test_validate_credentials_expired_token(self, mock_build):
         """Test credentials validation with expired token."""
         # Create mock credentials
@@ -287,7 +287,7 @@ class TestYouTubeAuthTokenValidation:
         assert result is False
         mock_build.assert_not_called()
     
-    @patch('src.medusa.uploaders.youtube_auth.build')
+    @patch('medusa.uploaders.youtube_auth.build')
     def test_validate_credentials_api_error(self, mock_build):
         """Test credentials validation with API error."""
         # Mock the YouTube API service to raise exception
@@ -321,7 +321,7 @@ class TestYouTubeAuthTokenValidation:
 class TestYouTubeAuthTokenRefresh:
     """Test token refresh functionality."""
     
-    @patch('src.medusa.uploaders.youtube_auth.Request')
+    @patch('medusa.uploaders.youtube_auth.Request')
     def test_refresh_token_success(self, mock_request):
         """Test successful token refresh."""
         # Create mock credentials with refresh capability
@@ -338,7 +338,7 @@ class TestYouTubeAuthTokenRefresh:
         assert result is True
         mock_credentials.refresh.assert_called_once()
     
-    @patch('src.medusa.uploaders.youtube_auth.Request')
+    @patch('medusa.uploaders.youtube_auth.Request')
     def test_refresh_token_failure(self, mock_request):
         """Test token refresh failure."""
         # Create mock credentials that fail to refresh
@@ -381,7 +381,7 @@ class TestYouTubeAuthTokenRefresh:
 class TestYouTubeAuthOAuthFlow:
     """Test OAuth flow initiation and completion."""
     
-    @patch('src.medusa.uploaders.youtube_auth.InstalledAppFlow')
+    @patch('medusa.uploaders.youtube_auth.InstalledAppFlow')
     def test_start_oauth_flow_success(self, mock_flow_class):
         """Test successful OAuth flow initiation."""
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -410,7 +410,7 @@ class TestYouTubeAuthOAuthFlow:
             mock_flow_class.from_client_secrets_file.assert_called_once()
             mock_flow.run_local_server.assert_called_once()
     
-    @patch('src.medusa.uploaders.youtube_auth.InstalledAppFlow')
+    @patch('medusa.uploaders.youtube_auth.InstalledAppFlow')
     def test_start_oauth_flow_failure(self, mock_flow_class):
         """Test OAuth flow failure."""
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -745,7 +745,7 @@ class TestYouTubeAuthErrorHandling:
             assert e.context.get("auth_type") == "oauth"
             assert e.context.get("token_expired") is True
     
-    @patch('src.medusa.uploaders.youtube_auth.Path.exists')
+    @patch('medusa.uploaders.youtube_auth.Path.exists')
     def test_file_validation_with_io_error(self, mock_exists):
         """Test file validation with I/O error."""
         mock_exists.side_effect = OSError("Permission denied")

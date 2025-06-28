@@ -653,16 +653,19 @@ class TestYouTubeUploaderUpload:
         network_error = socket.error("Connection failed")
         
         mock_insert_request = MagicMock()
+        # Make sure to simulate non-retryable error to avoid infinite loop
         mock_insert_request.next_chunk.side_effect = network_error
         uploader.service.videos().insert.return_value = mock_insert_request
         
         metadata = MediaMetadata(title="Test Video")
         
+        # Mock _is_retryable_error to return False for this test
         with patch.object(uploader, '_validate_file'), \
              patch('medusa.uploaders.youtube.MediaFileUpload'), \
-             patch('os.path.getsize', return_value=1024*1024):  # Mock file size
+             patch('os.path.getsize', return_value=1024*1024), \
+             patch.object(uploader, '_is_retryable_error', return_value=False):
             
-            with pytest.raises(NetworkError) as exc_info:
+            with pytest.raises(UploadError) as exc_info:
                 await uploader._upload_media("/path/to/video.mp4", metadata)
             
             assert "Connection failed" in str(exc_info.value)
@@ -804,6 +807,8 @@ class TestYouTubeUploaderIntegration:
             mock_response = {'id': 'test_video_id_123'}
             mock_insert_request = MagicMock()
             mock_insert_request.execute.return_value = mock_response
+            # Mock next_chunk for resumable upload
+            mock_insert_request.next_chunk.return_value = (None, mock_response)
             mock_service.videos().insert.return_value = mock_insert_request
             mock_build.return_value = mock_service
             

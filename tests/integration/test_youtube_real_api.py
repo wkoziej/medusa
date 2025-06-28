@@ -38,6 +38,8 @@ class TestYouTubeRealAPI:
         )
         return YouTubeUploader(config=config)
     
+    @pytest.mark.manual
+    @pytest.mark.skipif(True, reason="Manual test - requires OAuth browser interaction")
     @pytest.mark.asyncio
     async def test_authentication_flow(self, uploader):
         """Test real OAuth authentication flow."""
